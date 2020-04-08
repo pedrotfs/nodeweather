@@ -1,0 +1,25 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "simple weather app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrotfs/nodeweather.git"
+  },
+  "keywords": [
+    "weahter"
+  ],
+  "author": "pedrotfs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pedrotfs/nodeweather/issues"
+  },
+  "homepage": "https://github.com/pedrotfs/nodeweather#readme",
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}
