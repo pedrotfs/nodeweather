@@ -14,11 +14,13 @@ forecast.geocode(address, (error, dataGeocode) => {
     if(error) {
         return console.log(error)
     } 
-    forecast.weather(key, dataGeocode.latitude, dataGeocode.longitude, (error, dataForecast ) => {
+    const {latitude:lat, longitude:lon} = dataGeocode
+    forecast.weather(key, lat, lon, (error, dataForecast ) => {
         if(error) {
             return console.log(error)
         }
-        const json = JSON.parse(dataForecast.body)
+        const {body: body} = dataForecast
+        const json = JSON.parse(body)
         forecast.simpleForecast(json.current)
     })
 })
