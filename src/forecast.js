@@ -1,11 +1,12 @@
 const request = require("request")
 
 const simpleForecast = (weather) => {
-    console.log("In your coordinates, we have")
-    console.log("temperature: " + (weather.temp - 273))
-    console.log("pressure: " + weather.pressure / 1000)
-    console.log("humidity: " + weather.humidity + "%")
-    console.log("weather: " + weather.weather[0].description)
+    var output = "In your coordinates, we have: <br>"
+    output = output + "temperature: " + (weather.temp - 273) + "<br>"
+    output = output + "humidity: " + weather.humidity + "%<br>"
+    output = output + "pressure: " + weather.pressure / 1000 + " atm<br>"
+    output = output + "weather: " + weather.weather[0].description + "<br>"
+    return output
 }
 
 const geocode = (address, callback) => {
