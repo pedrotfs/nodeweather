@@ -26,7 +26,7 @@ const geocode = (address, callback) => {
     })
 }
 
-const weather = (key, latitude, longitude, callback) => {
+const weather = (key, latitude, longitude, location, callback) => {
     const urlOpenWeather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + key
     console.log(urlOpenWeather)
     request({url: urlOpenWeather}, (error, data) => {

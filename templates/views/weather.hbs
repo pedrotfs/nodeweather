@@ -10,8 +10,14 @@
     </head>
     <body>
         <div class="main-content">
-            {{>header}}        
-            <p>{{message}}</p>
+            {{>header}}
+
+            At {{location}}: <br>
+
+            Temperature:{{temp}} <br>
+            Pressure:{{pressure}} <br>
+            Humidity:{{humidity}} <br>
+            Weather:{{description}} <br>
         </div>
         {{>footer}}
     </body>

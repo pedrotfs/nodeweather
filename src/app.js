@@ -7,7 +7,7 @@ const forecast = require("./forecast.js")
 const app = express()
 const key = "e038c191ace82028934d1f0f08627fff"
 
-const address = "Uberaba"
+const address = "São Paulo"
 
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "../templates/views"))
@@ -25,14 +25,14 @@ app.get("", (req, res) => { // root
 
 app.get("/about", (req, res) => {
     res.render("about", {
-        title: "WEATHER APPLICATION - ABOUT ME",
+        title: "WEATHER APPLICATION",
         name: "Pedro Silva"
     })
 })
 
 app.get("/help", (req, res) => {
     res.render("help", {
-        title: "WEATHER APPLICATION - HELP",
+        title: "WEATHER APPLICATION",
         message: "this is an app on the Node Js Course. Its fun!",
         name: "Pedro Silva"
     })
@@ -45,7 +45,7 @@ app.get("/weather", (req, res) => {
     })
 })
 
-app.get("/weatherPage", (req, res) => {
+app.get("/weatherPanel", (req, res) => {
     if(address === undefined) {
         res.send("no address informed")
         console.log("no address informed")
@@ -56,17 +56,46 @@ app.get("/weatherPage", (req, res) => {
             if(error) {
                 res.send(error)
             } 
-            const {latitude:lat, longitude:lon} = dataGeocode
-            forecast.weather(key, lat, lon, (error, dataForecast ) => {
+            const {latitude:lat, longitude:lon, location: location} = dataGeocode
+            forecast.weather(key, lat, lon, location ,(error, dataForecast ) => {
                 if(error) {
                     res.send(error)
                 }
                 const {body: body} = dataForecast
                 const json = JSON.parse(body)
-                res.send(forecast.simpleForecast(json.current))
+                
+                const temp = (json.current.temp - 273) + " ºC"
+                const pressure = (json.current.pressure / 1000) + " ATM"
+                const humidity = json.current.humidity + " %"
+                
+                res.render("weather", {                    
+                    temp: temp,
+                    pressure: pressure,
+                    humidity: humidity,
+                    description: json.current.weather[0].description,
+                    location: location,
+                    title: "WEATHER APP",
+                    name: "Pedro Silva"
+                })
             })
         })
     }
+})
+
+app.get("/help/*", (req,res)=> {
+    res.render("error", {
+        title: "WEATHER APPLICATION",
+        name: "Pedro Silva",
+        errorMessage: "This help article was not found."
+    })
+})
+
+app.get("*", (req,res)=> {
+    res.render("error", {
+        title: "WEATHER APPLICATION",
+        name: "Pedro Silva",
+        errorMessage: "This page was not found."
+    })
 })
 
 app.listen("3000")
