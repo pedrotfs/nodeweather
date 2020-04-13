@@ -1,4 +1,5 @@
 const request = require("request")
+const geocodeKey = "pk.eyJ1IjoicGVkcm90ZnMiLCJhIjoiY2s4b3VhdmNmMDJpcDNlcDN2NWYzOXZkMCJ9.95rIcgrKw0QA-nmQlycB2g"
 
 const simpleForecast = (weather) => {
     var output = "In your coordinates, we have: <br>"
@@ -10,12 +11,14 @@ const simpleForecast = (weather) => {
 }
 
 const geocode = (address, callback) => {
-    const urlMapBox = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + encodeURIComponent(address) + ".json?access_token=pk.eyJ1IjoicGVkcm90ZnMiLCJhIjoiY2s4b3VhdmNmMDJpcDNlcDN2NWYzOXZkMCJ9.95rIcgrKw0QA-nmQlycB2g"
+    const urlMapBox = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + encodeURIComponent(address) + ".json?access_token=" + geocodeKey
     request({url:urlMapBox, json:true }, (error, {body}) => {
         if(error) {
-            callback("error retrieving geocode coordinates.", undefined)
+            return callback({error: "error retrieving geocode coordinates."}, undefined)
+        } else if(body.features === undefined) {
+            return callback({error: "error converting address."}, undefined)
         } else if(body.features.length === 0) {
-            callback("error converting address.", undefined)
+            return callback({error:"error converting address."}, undefined)
         } else {
             callback(undefined, {
                 latitude: body.features[0].center[1],
@@ -37,8 +40,6 @@ const weather = (key, latitude, longitude, location, callback) => {
         }
     })
 }
-
-
 
 module.exports = {
     simpleForecast: simpleForecast,
