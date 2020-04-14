@@ -5,6 +5,7 @@ const hbs = require("hbs")
 const forecast = require("./forecast.js")
 
 const app = express()
+const port = process.env.PORT || 3000
 const key = "e038c191ace82028934d1f0f08627fff"
 
 app.set("view engine", "hbs")
@@ -128,6 +129,6 @@ app.get("*", (req,res)=> {
     })
 })
 
-app.listen("3000", () => {
-    console.log("server is starting")
+app.listen(port, () => {
+    console.log("server is starting on port " + port)
 })
