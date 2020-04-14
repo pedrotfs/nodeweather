@@ -9,6 +9,7 @@ const messageOneC = document.querySelector('#messageOneC')
 const messageOneD = document.querySelector('#messageOneD')
 const messageOneE = document.querySelector('#messageOneE')
 const messageOneF = document.querySelector('#messageOneF')
+const messageOneG = document.querySelector('#messageOneG')
 const messageTwo = document.querySelector('#messageTwo')
 
 weatherForm.addEventListener("submit", (event) => {
@@ -23,6 +24,7 @@ weatherForm.addEventListener("submit", (event) => {
                 messageOneD.textContent = ""
                 messageOneE.textContent = ""
                 messageOneF.textContent = ""
+                messageOneG.textContent = ""
                 messageTwo.textContent = ""
             } else {
                 messageOne.textContent = "temperature:" + data.temp + ", pressure:" + data.pressure + ", humidity: " + data.humidity + ", weather: " + data.weather
@@ -31,7 +33,7 @@ weatherForm.addEventListener("submit", (event) => {
                 messageOneD.textContent = "+3h> t: " + (data.after3hour.temp - 273) + ", p: " + data.after3hour.pressure + ", h:" + data.after3hour.humidity + ", w:" + data.after2hour.weather[0].description
                 messageOneE.textContent = "+4h> t: " + (data.after4hour.temp - 273) + ", p: " + data.after4hour.pressure + ", h:" + data.after4hour.humidity + ", w:" + data.after2hour.weather[0].description
                 messageOneF.textContent = "+5h> t: " + (data.after5hour.temp - 273) + ", p: " + data.after5hour.pressure + ", h:" + data.after5hour.humidity + ", w:" + data.after2hour.weather[0].description
-
+                messageOneG.textContent = "Daily High:" + (data.daily.max - 273) + ", Minimun:" + (data.daily.min - 273)
                 messageTwo.textContent = data.location
             }
         })

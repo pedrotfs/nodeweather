@@ -43,7 +43,6 @@ app.get("/weather", (req, res) => {
             error:"no address specified"
         })
     }
-    console.log(address)
     forecast.geocode(address, (error, dataGeocode) => {
         if(error) {
             return res.send(error)
@@ -55,7 +54,7 @@ app.get("/weather", (req, res) => {
             }
             const {body: body} = dataForecast
             const json = JSON.parse(body)
-                                    
+                                                
             const object = {
                 temp : (json.current.temp - 273) + " ºC",
                 pressure : (json.current.pressure / 1000) + " ATM",
@@ -67,6 +66,7 @@ app.get("/weather", (req, res) => {
                 after3hour: json.hourly[3],
                 after4hour: json.hourly[4],
                 after5hour: json.hourly[5],
+                daily: json.daily[0].temp
             }
             res.send(object)
         })
@@ -84,7 +84,6 @@ app.get("/weatherPanel", (req, res) => {
     }
     
     forecast.geocode(address="Uberaba", (error, dataGeocode) => {
-        console.log(dataGeocode)
         if(error) {
             res.send(error)
         } 
