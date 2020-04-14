@@ -39,17 +39,13 @@ app.get("/help", (req, res) => {
 app.get("/weather", (req, res) => {
     address = req.query.address
     if(address === undefined) {
-        console.log("no address provided")
         return res.send({
             error:"no address specified"
         })
     }
     console.log(address)
     forecast.geocode(address, (error, dataGeocode) => {
-        console.log(dataGeocode)
         if(error) {
-            console.log("1")
-            console.log(error)
             return res.send(error)
         } 
         const {latitude:lat, longitude:lon, location: location} = dataGeocode
@@ -59,12 +55,18 @@ app.get("/weather", (req, res) => {
             }
             const {body: body} = dataForecast
             const json = JSON.parse(body)
-            
+                                    
             const object = {
                 temp : (json.current.temp - 273) + " ºC",
                 pressure : (json.current.pressure / 1000) + " ATM",
                 humidity : json.current.humidity + " %",
-                location : location
+                weather: json.current.weather[0].description,
+                location : location,
+                after1hour: json.hourly[1],
+                after2hour: json.hourly[2],
+                after3hour: json.hourly[3],
+                after4hour: json.hourly[4],
+                after5hour: json.hourly[5],
             }
             res.send(object)
         })
@@ -74,7 +76,6 @@ app.get("/weather", (req, res) => {
 app.get("/weatherPanel", (req, res) => {
     address = req.query.address
     if(address === undefined) {
-        console.log("no address provided")
         return res.render("error", {                    
             errorMessage: "Address not provided",
             title: "WEATHER APP",
@@ -94,7 +95,7 @@ app.get("/weatherPanel", (req, res) => {
             }
             const {body: body} = dataForecast
             const json = JSON.parse(body)
-            
+                       
             const temp = (json.current.temp - 273) + " ºC"
             const pressure = (json.current.pressure / 1000) + " ATM"
             const humidity = json.current.humidity + " %"
