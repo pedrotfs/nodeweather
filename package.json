@@ -21,7 +21,7 @@
   "homepage": "https://github.com/pedrotfs/nodeweather#readme",
   "dependencies": {
     "request": "^2.88.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "hbs": "^4.0.1"
   }
 }
